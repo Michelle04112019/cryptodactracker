@@ -4,14 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Investir en cryptomonnaies avec une stratégie long terme DAC : Diversification, Accumulation, Conviction.">
-    <title id="page-title">Crypto DAC Tracker</title>
+    <meta property="og:title" content="Crypto DAC Tracker - Investir en Cryptomonnaies" />
+    <meta property="og:description" content="Suivez une stratégie long terme DAC pour investir en cryptomonnaies : Diversification, Accumulation, Conviction." />
+    <meta property="og:image" content="URL_de_l'image_de_preview.jpg" />
+    <meta property="og:url" content="https://www.cryptodactracker.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Crypto DAC Tracker - Investir en Cryptomonnaies" />
+    <meta name="twitter:description" content="Suivez une stratégie long terme DAC pour investir en cryptomonnaies." />
+    <meta name="twitter:image" content="URL_de_l'image_de_preview.jpg" />
+    <title>Crypto DAC Tracker</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script>
-  if (window.location.hostname === 'cryptodactracker.com') {
-    window.location.href = 'https://www.cryptodactracker.com' + window.location.pathname;
-  }
-</script>
+      if (window.location.hostname !== 'www.cryptodactracker.com') {
+        window.location.href = 'https://www.cryptodactracker.com' + window.location.pathname + window.location.search;
+      }
+    </script>
     <meta name="google-site-verification" content="LDK3FB5PvRFqPiGQJejb5iHR2gvVfzu6-ikkxq6H9XI" />
 </head>
 <body>
@@ -27,7 +35,9 @@
     </p>
 
     <div class="controls" style="text-align: center; margin-bottom: 1rem;">
+        <label for="search">Rechercher une crypto :</label>
         <input type="text" id="search" placeholder="Rechercher une crypto..." aria-label="Rechercher une crypto" />
+        <label for="currency">Choisir la devise :</label>
         <select id="currency" aria-label="Choisir la devise">
             <option value="usd">USD</option>
             <option value="eur">EUR</option>
