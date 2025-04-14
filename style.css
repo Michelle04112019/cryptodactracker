@@ -1,0 +1,384 @@
+:root {
+    --bg-color: #0f172a;
+    --card-color: #1e293b;
+    --text-color: #f1f5f9;
+    --subtext-color: #94a3b8;
+    --primary-color: #3b82f6; /* Couleur bleue pour les éléments interactifs */
+    --positive-color: #22c55e; /* Vert pour les conseils positifs */
+    --negative-color: #ef4444; /* Rouge pour les conseils négatifs */
+}
+
+body.light {
+    --bg-color: #f1f5f9;
+    --card-color: #ffffff;
+    --text-color: #0f172a;
+    --subtext-color: #475569;
+}
+
+body.dark {
+    --bg-color: #121212;
+    --card-color: #1e293b;
+    --text-color: #e0e0e0;
+    --subtext-color: #b0b0b0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 1rem;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+input[type="text"], select, button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+select:focus,
+button:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+button {
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover,
+button:focus {
+    background-color: #2563eb;
+    transform: scale(1.05);
+}
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: var(--card-color);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.5s forwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.crypto-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.crypto-symbol {
+    color: var(--subtext-color);
+    font-size: 0.9rem;
+}
+
+.crypto-price {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.crypto-change {
+    margin-top: 0.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
+}
+
+.advice {
+    font-weight: bold;
+}
+
+.advice.positive {
+    color: green;
+}
+
+.advice.negative {
+    color: red;
+}
+
+.advice {
+    font-style: italic;
+}
+
+body.light .crypto-price,
+body.light .crypto-change,
+body.light .advice {
+    color: #1f2937; /* Contraste plus fort en mode clair */
+}
+
+body.dark .crypto-price,
+body.dark .crypto-change,
+body.dark .advice {
+    color: #e2e8f0; /* Contraste plus fort en mode sombre */
+}
+
+.crypto-chart-link {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    border: 1px solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.crypto-chart-link:hover,
+.crypto-chart-link:focus {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.crypto-chart-link {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #3498db;
+    text-decoration: none;
+    border: 1px solid #3498db;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.crypto-chart-link:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+#toggle-theme {
+    font-size: 18px;
+}
+
+#crypto-container {
+    padding-top: 20px;
+}
+
+#search:focus, #currency:focus {
+    border-color: #4CAF50;
+}
+
+#error-message {
+    text-align: center;
+    margin-top: 20px;
+    background-color: #f8d7da;
+    color: red;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Animation de chargement type "shimmer" */
+.shimmer {
+    background: linear-gradient(
+        90deg,
+        var(--card-color) 25%,
+        #ddd 50%,
+        var(--card-color) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite;
+    height: 1.2rem;
+    width: 100px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: transparent; /* cacher le texte initial */
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.warning-box {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+
+.warning-box strong {
+    font-weight: bold;
+}
+
+.advice-badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 0.6rem;
+    color: white;
+    text-align: center;
+}
+
+.advice-badge.positive {
+    background-color: #22c55e; /* Vert pour Renforcer */
+}
+
+.advice-badge.neutral {
+    background-color: #f59e0b; /* Orange pour Conserver */
+}
+
+/* Optionnel : harmonise la couleur du texte avec le thème clair/sombre */
+body.light .advice-badge {
+    color: #ffffff;
+}
+
+body.dark .advice-badge {
+    color: #ffffff;
+}
+
+.confidence-bar {
+    width: 100%;
+    height: 8px;
+    border-radius: 6px;
+    background-color: #e5e7eb;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.confidence-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.6s ease;
+}
+
+.confidence-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+.confidence-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.confidence-fill.green {
+    background-color: #22c55e;
+}
+
+.confidence-fill.orange {
+    background-color: #f59e0b;
+}
+
+.confidence-fill.red {
+    background-color: #ef4444;
+}
+
+.advice-badge.negative {
+    background-color: #ef4444; /* Rouge */
+}
+
+.confidence-fill.negative {
+    background-color: #ef4444;
+}
+
+#how-it-works-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s, color 0.3s;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    background-color: transparent;
+}
+
+#how-it-works-link:hover,
+#how-it-works-link:focus {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Contraste correct pour les deux thèmes */
+body.light #how-it-works-link {
+    color: var(--primary-color);
+}
+
+body.dark #how-it-works-link {
+    color: var(--primary-color);
+}

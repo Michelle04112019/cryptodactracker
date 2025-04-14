@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Investir en cryptomonnaies avec une stratégie long terme DAC : Diversification, Accumulation, Conviction.">
+    <title id="page-title">Crypto DAC Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header style="text-align: center; margin-bottom: 2rem;">
+        <h1 id="main-title">Investissement Long Terme - Stratégie DAC</h1>
+        <a id="how-it-works-link" href="/comment-ca-marche.html" target="_blank" class="how-it-works-link" style="display: inline-block; margin-top: 0.5rem; text-decoration: none; font-size: 0.95rem; color: #007BFF;">
+            📘 Comment ça marche ?
+        </a>
+    </header>
+
+    <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem;">
+        Suivez les cryptomonnaies principales pour une stratégie DAC : Diversification, Accumulation, et Conviction sur 10 ans.
+    </p>
+
+    <div class="controls" style="text-align: center; margin-bottom: 1rem;">
+        <input type="text" id="search" placeholder="Rechercher une crypto..." aria-label="Rechercher une crypto" />
+        <select id="currency" aria-label="Choisir la devise">
+            <option value="usd">USD</option>
+            <option value="eur">EUR</option>
+            <option value="btc">BTC</option>
+        </select>
+        <button id="toggle-theme" aria-label="Basculer le mode sombre/claire">🌙 Mode</button>
+        <button id="toggle-language" aria-label="Switch Language">EN</button>
+    </div>
+
+    <div id="crypto-container" class="grid" role="list" aria-live="polite"></div>
+
+    <div id="error-message" style="display:none; color: red; padding: 10px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px;">
+        <span id="error-message-text">Aucune crypto trouvée. Essayez une autre recherche.</span>
+    </div>
+
+    <div class="warning-box" style="max-width: 800px; margin: 2rem auto; font-size: 0.95rem;">
+        <p><strong>Avertissement :</strong> Les investissements dans les cryptomonnaies sont hautement spéculatifs et risqués. Le marché des cryptomonnaies est extrêmement volatile, et les prix peuvent fluctuer de manière significative en très peu de temps. Il est possible de perdre la totalité de votre investissement. Nous vous recommandons fortement de faire vos propres recherches (DYOR - Do Your Own Research), de consulter un conseiller financier avant de prendre des décisions d'investissement, et de n'investir que de l'argent que vous êtes prêt à perdre.</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
