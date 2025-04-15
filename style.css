@@ -382,3 +382,294 @@ body.light #how-it-works-link {
 body.dark #how-it-works-link {
     color: var(--primary-color);
 }
+/* Ajout de fond animé futuriste */
+body {
+    background: linear-gradient(135deg, #0d0d0d, #1b1b1b);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    color: #fff;
+}
+
+/* Animation de fond pour un effet de néon */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Animation des cartes de crypto */
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(0, 255, 255, 0.7);
+}
+
+/* Animation des indicateurs de confiance */
+.confidence-bar {
+    background: #333;
+    border-radius: 10px;
+    height: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.confidence-fill {
+    height: 100%;
+    transition: width 0.4s ease;
+}
+
+.confidence-indicator {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+/* Transition des boutons */
+button, .crypto-chart-link {
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover, .crypto-chart-link:hover {
+    background: rgba(0, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* Barre de recherche futuriste */
+#search {
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid #00FFFF;
+    color: #fff;
+    padding: 10px;
+    border-radius: 20px;
+    transition: background 0.3s ease;
+}
+
+#search:focus {
+    background: rgba(0, 0, 0, 0.6);
+    border-color: #FF00FF;
+}
+
+/* Styles de la page en mode clair ou sombre */
+body.light {
+    background: linear-gradient(135deg, #fff, #f2f2f2);
+    color: #333;
+}
+
+body.light .card {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+body.light .card-header {
+    color: #000;
+}
+/* Icônes futuristes */
+.crypto-name {
+    color: #00FFFF;
+    text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF;
+}
+
+.crypto-symbol {
+    color: #FF00FF;
+}
+
+button {
+    background: linear-gradient(45deg, #00FFFF, #FF00FF);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #FF00FF, #00FFFF);
+}
+#ticker-container {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    z-index: 9999;
+}
+
+@keyframes tickerAnimation {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+#ticker {
+    white-space: nowrap;
+    display: inline-block;
+    animation: tickerAnimation 10s linear infinite;
+}
+/* Fond animé avec étoiles */
+body {
+    position: relative;
+    overflow: auto; /* Permet de défiler */
+}
+
+/* Le canvas qui affichera les étoiles */
+#star-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Assure que l'élément canvas reste derrière tout le contenu */
+    pointer-events: none; /* Empêche le canvas d'interférer avec les clics et le défilement */
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Animation de dégradé pour le fond */
+body {
+    background: linear-gradient(135deg, #0d0d0d, #1b1b1b);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+}
+
+/* Mode clair - amélioration de la lisibilité du texte */
+body.light {
+    background: linear-gradient(135deg, #fff, #f2f2f2);
+    color: #333;
+}
+
+body.light .crypto-name {
+    color: #003366;  /* Bleu foncé pour une meilleure lisibilité en mode clair */
+    text-shadow: none;  /* Retirer l'ombre du texte pour un meilleur contraste */
+}
+
+body.light .crypto-symbol {
+    color: #0066CC;  /* Bleu plus foncé et visible */
+}
+
+body.light .card-header {
+    color: #333;
+}
+
+body.light .card {
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;  /* Texte foncé pour les cartes */
+}
+
+body.light .crypto-price,
+body.light .crypto-change {
+    color: #003366;
+}
+
+body.light .crypto-lowest,
+body.light .crypto-invest,
+body.light .crypto-chart-link {
+    color: #0066CC;
+}
+
+/* Ajuste les couleurs de la barre de progression de confiance en mode clair */
+body.light .confidence-bar {
+    background: #f4f4f4;
+}
+
+body.light .confidence-fill {
+    transition: width 0.4s ease;
+}
+
+body.light .confidence-indicator {
+    background-color: #0066CC;
+}
+/* Style général pour le sélecteur de devises */
+#currency {
+    background-color: #1e1e2f; /* Fond sombre */
+    color: #fff; /* Texte blanc */
+    border: 1px solid #007BFF; /* Bordure bleue */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 8px 15px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    appearance: none; /* Enlever le style natif du select */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 150px; /* Taille fixe pour le bouton */
+    margin-top: 5px;
+}
+
+/* Style lors du survol */
+#currency:hover {
+    border-color: #0056b3;
+    background-color: #333;
+}
+
+/* Style lorsque le select est ouvert */
+#currency:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Style de la flèche (indicateur du select) */
+#currency::-ms-expand {
+    display: none; /* Cacher la flèche par défaut sur IE/Edge */
+}
+
+/* Option : Apparence des options du select */
+#currency option {
+    background-color: #1e1e2f;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Lorsque le mode clair est activé */
+body.light #currency {
+    background-color: #fff; /* Fond blanc en mode clair */
+    color: #333; /* Texte noir */
+    border: 1px solid #007BFF; /* Bordure bleue */
+}
+
+/* Lorsque l'utilisateur survole ou sélectionne une option */
+body.light #currency:hover {
+    border-color: #0056b3;
+    background-color: #f4f4f4;
+}
+
+/* Apparence de la flèche sur le mode clair */
+body.light #currency::-ms-expand {
+    color: #007BFF; /* Change la flèche en bleu */
+}
