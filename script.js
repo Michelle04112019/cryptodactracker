@@ -1,6 +1,6 @@
 let cryptosData = [];
 let currentLanguage = 'fr';
-let usdToCurrencyRate = 1; // Taux de conversion USD -> Devise choisie
+let usdToCurrencyRate = 1;
 
 const adviceLabels = {
     fr: {
@@ -13,7 +13,11 @@ const adviceLabels = {
         chartLink: "Voir le graphique",
         tradingBadge: "🎯 Trading possible",
         ma200: "📊 MA200",
-        rsi: "📐 RSI"
+        rsi: "📐 RSI",
+        macd: "📊 MACD",
+        macdBullish: "✅ MACD haussier",
+        macdBearish: "❌ MACD baissier",
+        macdNeutral: "➖ MACD neutre"
     },
     en: {
         buy: "📈 Accumulate",
@@ -25,7 +29,11 @@ const adviceLabels = {
         chartLink: "View Chart",
         tradingBadge: "🎯 Trading Opportunity",
         ma200: "📊 MA200",
-        rsi: "📐 RSI"
+        rsi: "📐 RSI",
+        macd: "📊 MACD",
+        macdBullish: "✅ Bullish MACD",
+        macdBearish: "❌ Bearish MACD",
+        macdNeutral: "➖ Neutral MACD"
     }
 };
 
@@ -116,6 +124,44 @@ function calculateRSI(sparkline, period = 14) {
     return Math.round(100 - (100 / (1 + rs)));
 }
 
+function calculateEMA(prices, period) {
+    const k = 2 / (period + 1);
+    let ema = prices.slice(0, period).reduce((sum, val) => sum + val, 0) / period;
+    const emaArray = [ema];
+
+    for (let i = period; i < prices.length; i++) {
+        ema = prices[i] * k + ema * (1 - k);
+        emaArray.push(ema);
+    }
+
+    return emaArray;
+}
+
+function calculateMACD(sparkline) {
+    if (!sparkline || !Array.isArray(sparkline.price) || sparkline.price.length < 35) return null;
+
+    const prices = sparkline.price;
+    const ema12 = calculateEMA(prices, 12);
+    const ema26 = calculateEMA(prices, 26);
+    const macdLine = ema12.slice(-ema26.length).map((val, idx) => val - ema26[idx]);
+    const signalLine = calculateEMA(macdLine, 9);
+    const latestMACD = macdLine[macdLine.length - 1];
+    const latestSignal = signalLine[signalLine.length - 1];
+    const histogram = latestMACD - latestSignal;
+
+    return {
+        macd: latestMACD.toFixed(2),
+        signal: latestSignal.toFixed(2),
+        histo: histogram.toFixed(2),
+        trend: latestMACD > latestSignal ? 'bullish' : latestMACD < latestSignal ? 'bearish' : 'neutral'
+    };
+}
+
+function getMockMA200(currentPrice) {
+    const variation = (Math.random() * 0.2 - 0.1);
+    return currentPrice * (1 + variation);
+}
+
 async function fetchUsdToCurrencyRate(currency) {
     if (currency === 'usd') {
         usdToCurrencyRate = 1;
@@ -129,52 +175,6 @@ async function fetchUsdToCurrencyRate(currency) {
         console.error("Erreur conversion USD ->", currency, err);
         usdToCurrencyRate = 1;
     }
-}
-
-function changeLanguage(language) {
-    currentLanguage = language;
-    localStorage.setItem('language', language);
-
-    document.getElementById('page-title').innerText = 'Crypto DAC Tracker';
-    document.getElementById('main-title').innerText = currentLanguage === 'fr'
-        ? 'Investissement Long Terme - Stratégie DAC'
-        : 'Long-Term Investment - DAC Strategy';
-
-    document.getElementById('search').placeholder = currentLanguage === 'fr'
-        ? 'Rechercher une crypto...'
-        : 'Search a crypto...';
-
-    document.getElementById('error-message-text').innerText = currentLanguage === 'fr'
-        ? 'Aucune crypto trouvée. Essayez une autre recherche.'
-        : 'No crypto found. Try a different search.';
-
-    document.getElementById('toggle-language').innerText = currentLanguage === 'fr' ? 'EN' : 'FR';
-    document.getElementById('toggle-theme').innerText = currentLanguage === 'fr' ? '🌙 Mode' : '🌙 Dark Mode';
-
-    fetchTopCryptos(document.getElementById('currency').value);
-}
-
-async function fetchTopCryptos(currency = 'usd') {
-    const container = document.getElementById('crypto-container');
-    container.innerHTML = "<p>Chargement des données...</p>";
-
-    await fetchUsdToCurrencyRate(currency);
-
-    try {
-        const res = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=1h,24h,7d`);
-        if (!res.ok) throw new Error(`Erreur API : ${res.status} - ${res.statusText}`);
-        const data = await res.json();
-        cryptosData = data;
-        displayCryptos(data, currency);
-    } catch (error) {
-        container.innerHTML = `<p>Erreur lors du chargement des données : ${error.message}</p>`;
-        console.error("Erreur détaillée:", error);
-    }
-}
-
-function getMockMA200(currentPrice) {
-    const variation = (Math.random() * 0.2 - 0.1); // +/-10%
-    return currentPrice * (1 + variation);
 }
 
 async function displayCryptos(data, currency) {
@@ -212,12 +212,17 @@ async function displayCryptos(data, currency) {
             ? `${ma200Value.toFixed(8)} BTC`
             : `${ma200Value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency.toUpperCase()}`;
 
-        // RSI simulé (fictif ou calculé selon un algo)
-        const rsiValue = (Math.random() * 100).toFixed(1); // Valeur simulée
-        const rsiTooltip = adviceLabels[currentLanguage].rsiInfo;
-        let rsiColor = 'orange';
-        if (rsiValue < 30) rsiColor = 'green';
-        else if (rsiValue > 70) rsiColor = 'red';
+        const rsiValue = (Math.random() * 100).toFixed(1);
+        let rsiColor = getRSIColor(rsiValue);
+
+        const macdData = calculateMACD(coin.sparkline_in_7d);
+        const macdText = macdData ? `${macdData.macd} / ${macdData.signal} / ${macdData.histo}` : 'N/A';
+        const macdBadge = macdData
+            ? `<div class="macd-badge">${adviceLabels[currentLanguage][
+                macdData.trend === 'bullish' ? 'macdBullish' :
+                macdData.trend === 'bearish' ? 'macdBearish' : 'macdNeutral'
+            ]}</div>`
+            : '';
 
         card.innerHTML = `
             <div class="card-header">
@@ -228,10 +233,12 @@ async function displayCryptos(data, currency) {
             <div class="crypto-change ${coin.price_change_percentage_24h >= 0 ? 'positive' : 'negative'}">
                 ${coin.price_change_percentage_24h.toFixed(2)}% (24h)
             </div>
-            <div class="crypto-lowest" title="${adviceLabels[currentLanguage].lowPrice}">${adviceLabels[currentLanguage].lowPrice} : ${lowestFormatted}</div>
+            <div class="crypto-lowest">${adviceLabels[currentLanguage].lowPrice} : ${lowestFormatted}</div>
             <div class="crypto-invest">${adviceLabels[currentLanguage].investRanges} : ${investmentText}</div>
             <div class="crypto-ma200">${adviceLabels[currentLanguage].ma200} : ${ma200Formatted}</div>
-            <div class="crypto-rsi" title="${rsiTooltip}">${adviceLabels[currentLanguage].rsi} : <span style="color:${rsiColor};">${rsiValue}</span></div>
+            <div class="crypto-rsi">${adviceLabels[currentLanguage].rsi} : <span style="color:${rsiColor};">${rsiValue}</span></div>
+            <div class="crypto-macd">${adviceLabels[currentLanguage].macd} : ${macdText}</div>
+            ${macdBadge}
             ${showTrading ? `<div class="trading-badge">${adviceLabels[currentLanguage].tradingBadge}</div>` : ''}
             <div class="advice-badge ${analysis.confidenceClass}">${analysis.label}</div>
             <div class="confidence-label">
@@ -245,6 +252,47 @@ async function displayCryptos(data, currency) {
         `;
         container.appendChild(card);
     }
+}
+
+async function fetchTopCryptos(currency = 'usd') {
+    const container = document.getElementById('crypto-container');
+    container.innerHTML = "<p>Chargement des données...</p>";
+
+    await fetchUsdToCurrencyRate(currency);
+
+    try {
+        const res = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=1h,24h,7d`);
+        if (!res.ok) throw new Error(`Erreur API : ${res.status} - ${res.statusText}`);
+        const data = await res.json();
+        cryptosData = data;
+        displayCryptos(data, currency);
+    } catch (error) {
+        container.innerHTML = `<p>Erreur lors du chargement des données : ${error.message}</p>`;
+        console.error("Erreur détaillée:", error);
+    }
+}
+
+function changeLanguage(language) {
+    currentLanguage = language;
+    localStorage.setItem('language', language);
+
+    document.getElementById('page-title').innerText = 'Crypto DAC Tracker';
+    document.getElementById('main-title').innerText = currentLanguage === 'fr'
+        ? 'Investissement Long Terme - Stratégie DAC'
+        : 'Long-Term Investment - DAC Strategy';
+
+    document.getElementById('search').placeholder = currentLanguage === 'fr'
+        ? 'Rechercher une crypto...'
+        : 'Search a crypto...';
+
+    document.getElementById('error-message-text').innerText = currentLanguage === 'fr'
+        ? 'Aucune crypto trouvée. Essayez une autre recherche.'
+        : 'No crypto found. Try a different search.';
+
+    document.getElementById('toggle-language').innerText = currentLanguage === 'fr' ? 'EN' : 'FR';
+    document.getElementById('toggle-theme').innerText = currentLanguage === 'fr' ? '🌙 Mode' : '🌙 Dark Mode';
+
+    fetchTopCryptos(document.getElementById('currency').value);
 }
 
 async function fetchFearGreedIndex() {
