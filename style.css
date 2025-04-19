@@ -682,3 +682,48 @@ body.light #currency::-ms-expand {
     font-size: 1rem;
     max-width: 300px;
 }
+.crypto-rsi {
+    font-weight: bold;
+    margin-top: 6px;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.07);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.crypto-rsi[style*="green"] {
+    background-color: #e6f4ea;
+    color: #1e8e3e;
+}
+
+.crypto-rsi[style*="orange"] {
+    background-color: #fff4e5;
+    color: #e67e22;
+}
+
+.crypto-rsi[style*="red"] {
+    background-color: #fdecea;
+    color: #c0392b;
+}
+.crypto-rsi {
+    font-weight: bold;
+    margin-top: 6px;
+    font-size: 14px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.06);
+    transition: all 0.3s ease;
+    cursor: help;
+    white-space: nowrap;
+}
+
+.crypto-rsi span {
+    font-weight: 600;
+}
+
+.crypto-rsi[title]:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
