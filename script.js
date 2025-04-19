@@ -12,7 +12,8 @@ const adviceLabels = {
         confidence: "Confiance",
         chartLink: "Voir le graphique",
         tradingBadge: "🎯 Trading possible",
-        ma200: "📊 MA200"
+        ma200: "📊 MA200",
+        rsi: "📐 RSI"
     },
     en: {
         buy: "📈 Accumulate",
@@ -23,7 +24,8 @@ const adviceLabels = {
         confidence: "Confidence",
         chartLink: "View Chart",
         tradingBadge: "🎯 Trading Opportunity",
-        ma200: "📊 MA200"
+        ma200: "📊 MA200",
+        rsi: "📐 RSI"
     }
 };
 
@@ -86,6 +88,32 @@ function getConfidenceColor(confidence) {
     if (confidence >= 80) return 'green';
     if (confidence >= 50) return 'orange';
     return 'red';
+}
+
+function getRSIColor(rsi) {
+    if (rsi < 30) return 'green';
+    if (rsi > 70) return 'red';
+    return 'orange';
+}
+
+function calculateRSI(sparkline, period = 14) {
+    if (!sparkline || !Array.isArray(sparkline.price) || sparkline.price.length < period + 1) return null;
+
+    const prices = sparkline.price;
+    let gains = 0, losses = 0;
+
+    for (let i = 1; i <= period; i++) {
+        const change = prices[i] - prices[i - 1];
+        if (change >= 0) gains += change;
+        else losses -= change;
+    }
+
+    const avgGain = gains / period;
+    const avgLoss = losses / period;
+
+    if (avgLoss === 0) return 100;
+    const rs = avgGain / avgLoss;
+    return Math.round(100 - (100 / (1 + rs)));
 }
 
 async function fetchUsdToCurrencyRate(currency) {
@@ -184,6 +212,13 @@ async function displayCryptos(data, currency) {
             ? `${ma200Value.toFixed(8)} BTC`
             : `${ma200Value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency.toUpperCase()}`;
 
+        // RSI simulé (fictif ou calculé selon un algo)
+        const rsiValue = (Math.random() * 100).toFixed(1); // Valeur simulée
+        const rsiTooltip = adviceLabels[currentLanguage].rsiInfo;
+        let rsiColor = 'orange';
+        if (rsiValue < 30) rsiColor = 'green';
+        else if (rsiValue > 70) rsiColor = 'red';
+
         card.innerHTML = `
             <div class="card-header">
                 <img src="${coin.image}" alt="Logo de ${coin.name}" width="32" height="32">
@@ -196,6 +231,7 @@ async function displayCryptos(data, currency) {
             <div class="crypto-lowest" title="${adviceLabels[currentLanguage].lowPrice}">${adviceLabels[currentLanguage].lowPrice} : ${lowestFormatted}</div>
             <div class="crypto-invest">${adviceLabels[currentLanguage].investRanges} : ${investmentText}</div>
             <div class="crypto-ma200">${adviceLabels[currentLanguage].ma200} : ${ma200Formatted}</div>
+            <div class="crypto-rsi" title="${rsiTooltip}">${adviceLabels[currentLanguage].rsi} : <span style="color:${rsiColor};">${rsiValue}</span></div>
             ${showTrading ? `<div class="trading-badge">${adviceLabels[currentLanguage].tradingBadge}</div>` : ''}
             <div class="advice-badge ${analysis.confidenceClass}">${analysis.label}</div>
             <div class="confidence-label">
