@@ -43,7 +43,12 @@ function getLowestPriceLast7Days(sparkline) {
 }
 
 function getInvestmentRanges(price, currency) {
-    if (currency === 'btc') {
+    if (currency === 'usd') {
+        if (price < 5) return ['$50', '$100', '$150'];
+        if (price < 50) return ['$100', '$200', '$300'];
+        if (price < 500) return ['$250', '$500', '$750'];
+        return ['$500', '$1000', '$1500'];
+    } else if (currency === 'btc') {
         if (price < 0.0001) return ['0.0001 BTC', '0.0005 BTC', '0.001 BTC'];
         if (price < 0.001) return ['0.001 BTC', '0.005 BTC', '0.01 BTC'];
         if (price < 0.01) return ['0.01 BTC', '0.05 BTC', '0.1 BTC'];
@@ -55,6 +60,7 @@ function getInvestmentRanges(price, currency) {
         return ['500€', '1000€', '1500€'];
     }
 }
+
 
 function analyzeCrypto(coin) {
     const change1h = coin.price_change_percentage_1h_in_currency || 0;
