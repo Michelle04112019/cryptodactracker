@@ -11,7 +11,8 @@ const adviceLabels = {
         investRanges: "💸 Tranches suggérées",
         confidence: "Confiance",
         chartLink: "Voir le graphique",
-        tradingBadge: "🎯 Trading possible"
+        tradingBadge: "🎯 Trading possible",
+        ma200: "📊 MA200"
     },
     en: {
         buy: "📈 Accumulate",
@@ -21,17 +22,16 @@ const adviceLabels = {
         investRanges: "💸 Suggested Ranges",
         confidence: "Confidence",
         chartLink: "View Chart",
-        tradingBadge: "🎯 Trading Opportunity"
+        tradingBadge: "🎯 Trading Opportunity",
+        ma200: "📊 MA200"
     }
 };
 
-// Fonction pour obtenir le prix le plus bas des 7 derniers jours
 function getLowestPriceLast7Days(sparkline) {
     if (!sparkline || !Array.isArray(sparkline.price) || sparkline.price.length === 0) return null;
     return Math.min(...sparkline.price);
 }
 
-// Fonction pour obtenir les tranches d'investissement suggérées
 function getInvestmentRanges(price, currency) {
     if (currency === 'btc') {
         if (price < 0.0001) return ['0.0001 BTC', '0.0005 BTC', '0.001 BTC'];
@@ -46,7 +46,6 @@ function getInvestmentRanges(price, currency) {
     }
 }
 
-// Fonction pour analyser les cryptos
 function analyzeCrypto(coin) {
     const change1h = coin.price_change_percentage_1h_in_currency || 0;
     const change24h = coin.price_change_percentage_24h_in_currency || 0;
@@ -79,19 +78,16 @@ function analyzeCrypto(coin) {
     return { label, confidence, confidenceClass };
 }
 
-// Fonction pour vérifier si une crypto est hautement volatile
 function isHighlyVolatile(coin) {
     return Math.abs(coin.price_change_percentage_24h_in_currency || 0) > 5;
 }
 
-// Fonction pour obtenir la couleur de confiance
 function getConfidenceColor(confidence) {
     if (confidence >= 80) return 'green';
     if (confidence >= 50) return 'orange';
     return 'red';
 }
 
-// Fonction pour récupérer le taux de conversion USD -> Devise choisie (ex: EUR, BTC, etc.)
 async function fetchUsdToCurrencyRate(currency) {
     if (currency === 'usd') {
         usdToCurrencyRate = 1;
@@ -107,7 +103,6 @@ async function fetchUsdToCurrencyRate(currency) {
     }
 }
 
-// Fonction pour changer la langue de l'interface
 function changeLanguage(language) {
     currentLanguage = language;
     localStorage.setItem('language', language);
@@ -131,45 +126,29 @@ function changeLanguage(language) {
     fetchTopCryptos(document.getElementById('currency').value);
 }
 
-// Fonction pour récupérer les cryptos
 async function fetchTopCryptos(currency = 'usd') {
     const container = document.getElementById('crypto-container');
     container.innerHTML = "<p>Chargement des données...</p>";
 
-    // Appel de la fonction pour récupérer le taux de conversion de la devise choisie
     await fetchUsdToCurrencyRate(currency);
 
     try {
         const res = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=1h,24h,7d`);
-
-        console.log('API Response Status:', res.status);  // Log du statut de la réponse API
-
-        // Vérification du statut de la réponse
-        if (!res.ok) {
-            throw new Error(`Erreur API : ${res.status} - ${res.statusText}`);
-        }
-
+        if (!res.ok) throw new Error(`Erreur API : ${res.status} - ${res.statusText}`);
         const data = await res.json();
-        console.log('Data from API:', data);  // Log des données retournées
-
-        // Vérification si les données sont valides
-        if (!Array.isArray(data) || data.length === 0) {
-            throw new Error("Aucune donnée disponible ou mauvaise structure des données.");
-        }
-
         cryptosData = data;
         displayCryptos(data, currency);
-
     } catch (error) {
-        // Affichage d'une erreur spécifique si une exception se produit
         container.innerHTML = `<p>Erreur lors du chargement des données : ${error.message}</p>`;
-        console.error("Erreur détaillée:", error);  // Log de l'erreur complète
+        console.error("Erreur détaillée:", error);
     }
 }
 
+function getMockMA200(currentPrice) {
+    const variation = (Math.random() * 0.2 - 0.1); // +/-10%
+    return currentPrice * (1 + variation);
+}
 
-
-// Fonction pour afficher les cryptos
 async function displayCryptos(data, currency) {
     const container = document.getElementById('crypto-container');
     container.innerHTML = '';
@@ -191,22 +170,24 @@ async function displayCryptos(data, currency) {
             : coin.current_price.toLocaleString();
 
         const rawLowest = getLowestPriceLast7Days(coin.sparkline_in_7d) || coin.current_price;
-        const convertedLowest = rawLowest * usdToCurrencyRate; // Appliquer le taux de conversion
+        const convertedLowest = rawLowest * usdToCurrencyRate;
         const lowestFormatted = currency === 'btc'
             ? `${convertedLowest.toFixed(8)} BTC`
             : `${convertedLowest.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency.toUpperCase()}`;
 
         const investmentText = getInvestmentRanges(convertedLowest, currency).join(', ');
-
         const analysis = analyzeCrypto(coin);
         const showTrading = isHighlyVolatile(coin);
+
+        const ma200Value = getMockMA200(coin.current_price) * usdToCurrencyRate;
+        const ma200Formatted = currency === 'btc'
+            ? `${ma200Value.toFixed(8)} BTC`
+            : `${ma200Value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency.toUpperCase()}`;
 
         card.innerHTML = `
             <div class="card-header">
                 <img src="${coin.image}" alt="Logo de ${coin.name}" width="32" height="32">
-                <div>
-                    <div class="crypto-name">${coin.name} <span class="crypto-symbol">(${coin.symbol.toUpperCase()})</span></div>
-                </div>
+                <div><div class="crypto-name">${coin.name} <span class="crypto-symbol">(${coin.symbol.toUpperCase()})</span></div></div>
             </div>
             <div class="crypto-price">💰 ${currentFormatted} ${currency.toUpperCase()}</div>
             <div class="crypto-change ${coin.price_change_percentage_24h >= 0 ? 'positive' : 'negative'}">
@@ -214,6 +195,7 @@ async function displayCryptos(data, currency) {
             </div>
             <div class="crypto-lowest" title="${adviceLabels[currentLanguage].lowPrice}">${adviceLabels[currentLanguage].lowPrice} : ${lowestFormatted}</div>
             <div class="crypto-invest">${adviceLabels[currentLanguage].investRanges} : ${investmentText}</div>
+            <div class="crypto-ma200">${adviceLabels[currentLanguage].ma200} : ${ma200Formatted}</div>
             ${showTrading ? `<div class="trading-badge">${adviceLabels[currentLanguage].tradingBadge}</div>` : ''}
             <div class="advice-badge ${analysis.confidenceClass}">${analysis.label}</div>
             <div class="confidence-label">
@@ -229,7 +211,36 @@ async function displayCryptos(data, currency) {
     }
 }
 
-// Fonction de recherche
+async function fetchFearGreedIndex() {
+    try {
+        const res = await fetch('https://api.alternative.me/fng/');
+        const data = await res.json();
+        const index = data.data[0];
+        displayFearGreedIndex(index);
+    } catch (err) {
+        console.error("Erreur Crypto Fear & Greed Index:", err);
+    }
+}
+
+function displayFearGreedIndex(index) {
+    const container = document.getElementById('fear-greed-container');
+    const emoji = {
+        Extreme_Fear: "😱",
+        Fear: "😨",
+        Neutral: "😐",
+        Greed: "😏",
+        Extreme_Greed: "🚀"
+    };
+
+    const classification = index.value_classification.replace(" ", "_");
+    container.innerHTML = `
+        <div class="fear-greed">
+            <strong>📊 Crypto Fear & Greed Index</strong><br>
+            ${emoji[classification] || ""} ${index.value}/100 - ${index.value_classification}
+        </div>
+    `;
+}
+
 document.getElementById('search').addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
     const filtered = cryptosData.filter(coin =>
@@ -239,93 +250,31 @@ document.getElementById('search').addEventListener('input', (e) => {
     displayCryptos(filtered, document.getElementById('currency').value);
 });
 
-// Gestion de la devise sélectionnée
 document.getElementById('currency').addEventListener('change', (e) => {
     fetchTopCryptos(e.target.value);
 });
 
-// Changement de thème
 document.getElementById('toggle-theme').addEventListener('click', () => {
     document.body.classList.toggle('light');
     localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
 });
 
-// Changement de langue
 document.getElementById('toggle-language').addEventListener('click', () => {
     const newLang = currentLanguage === 'fr' ? 'en' : 'fr';
     changeLanguage(newLang);
 });
 
-// Initialisation au chargement
 window.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme');
     const savedLanguage = localStorage.getItem('language');
-    if (savedTheme === 'light') {
-        document.body.classList.add('light');
-    }
+    if (savedTheme === 'light') document.body.classList.add('light');
     changeLanguage(savedLanguage || 'fr');
     fetchTopCryptos();
+    fetchFearGreedIndex();
 });
 
-// Actualisation régulière des cryptos
 setInterval(() => {
     const currency = document.getElementById('currency').value;
     fetchTopCryptos(currency);
+    fetchFearGreedIndex();
 }, 60000);
-// Fonction pour générer le fond animé avec des étoiles
-function createStarryBackground() {
-    const canvas = document.createElement('canvas');
-    canvas.id = 'star-background';
-    document.body.appendChild(canvas);
-    const ctx = canvas.getContext('2d');
-
-    // Ajuste la taille du canvas à celle de la fenêtre
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Crée un tableau de particules étoiles
-    const stars = [];
-    const starCount = 150;
-
-    for (let i = 0; i < starCount; i++) {
-        stars.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            radius: Math.random() * 1.5 + 0.5,
-            speed: Math.random() * 0.5 + 0.1
-        });
-    }
-
-    // Fonction pour dessiner les étoiles
-    function drawStars() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.beginPath();
-
-        stars.forEach(star => {
-            ctx.moveTo(star.x, star.y);
-            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        });
-
-        ctx.fill();
-    }
-
-    // Fonction pour animer les étoiles
-    function animateStars() {
-        stars.forEach(star => {
-            star.y += star.speed;
-            if (star.y > canvas.height) {
-                star.y = 0;
-            }
-        });
-        drawStars();
-        requestAnimationFrame(animateStars);
-    }
-
-    animateStars();
-}
-
-// Appelle la fonction au chargement de la page
-window.addEventListener('DOMContentLoaded', () => {
-    createStarryBackground();
-});
