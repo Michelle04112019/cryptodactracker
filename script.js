@@ -1,3 +1,4 @@
+
 let cryptosData = [];
 let currentLanguage = 'fr';
 let usdToCurrencyRate = 1;
@@ -269,7 +270,17 @@ async function fetchTopCryptos(currency = 'usd') {
     try {
         const res = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=1h,24h,7d`);
         if (!res.ok) throw new Error(`Erreur API : ${res.status} - ${res.statusText}`);
-        const data = await res.json();
+        let data = await res.json();
+
+        // Vérifie si MATIC est présent (ancien ID utilisé : matic-network)
+        const hasPolygon = data.some(c => c.id === 'matic-network');
+
+        if (!hasPolygon) {
+            const polygonRes = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&ids=matic-network&sparkline=true&price_change_percentage=1h,24h,7d`);
+            const polygonData = await polygonRes.json();
+            data = [...data, ...polygonData];
+        }
+
         cryptosData = data;
         displayCryptos(data, currency);
     } catch (error) {
@@ -277,6 +288,7 @@ async function fetchTopCryptos(currency = 'usd') {
         console.error("Erreur détaillée:", error);
     }
 }
+
 
 function changeLanguage(language) {
     currentLanguage = language;
