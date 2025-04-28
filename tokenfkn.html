@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Fucken Token - Défend la liberté des cryptos et enrichit ses utilisateurs dans un univers néon futuriste.">
+    <meta name="keywords" content="The Fucken, crypto, liberté, anarchie, décentralisation, futuriste, néon">
+    <meta name="author" content="Ton Nom ou Pseudonyme">
+    <title>The Fucken - Crypto are Free</title>
+    <style>
+        /* Fond dynamique et agressif */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: linear-gradient(45deg, #e60000, #ff9900, #0066cc, #33cc33);
+            background-size: 400% 400%;
+            animation: gradientAnimation 5s ease infinite, flickerAnimation 1s infinite alternate;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes flickerAnimation {
+            0% { opacity: 1; }
+            50% { opacity: 0.2; }
+            100% { opacity: 1; }
+        }
+
+        /* Overlay sombre pour créer un effet de tension */
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        h1 {
+            font-size: 4em;
+            color: #FF5733;
+            text-shadow: 0 0 10px #FF5733, 0 0 20px #FF5733, 0 0 30px #FF5733, 0 0 40px #FF5733;
+            animation: flickerAnimation 0.3s infinite alternate;
+        }
+
+        p {
+            font-size: 1.5em;
+            color: #eee;
+            text-shadow: 0 0 10px #FF5733, 0 0 15px #FF5733;
+        }
+
+        .logo {
+            width: 220px;
+            margin-top: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .main-content {
+            padding: 60px 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-top: 40px;
+            color: #FF5733;
+        }
+
+        .cta-button {
+            padding: 20px 40px;
+            background-color: #FF5733;
+            color: white;
+            font-size: 1.5em;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-top: 30px;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #C0392B;
+            transform: scale(1.1);
+        }
+
+        footer {
+            background-color: #222;
+            color: #888;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            text-align: center;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .social-links a {
+            color: #FF5733;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.5em;
+        }
+
+        .social-links a:hover {
+            color: #C0392B;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .lang-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .lang-button {
+            background-color: #FF5733;
+            color: white;
+            font-size: 1.2em;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .lang-button:hover {
+            background-color: #C0392B;
+        }
+    </style>
+</head>
+<body>
+    <!-- Overlay pour effet de brume et d'agression -->
+    <div class="background-overlay"></div>
+
+    <!-- Boutons de traduction -->
+    <div class="lang-buttons">
+        <button class="lang-button" onclick="changeLanguage('fr')">FR</button>
+        <button class="lang-button" onclick="changeLanguage('en')">EN</button>
+        <button class="lang-button" onclick="changeLanguage('zh')">ZH</button>
+    </div>
+
+    <header>
+        <h1 id="title">The Fucken</h1>
+        <p id="slogan">Crypto are free</p>
+        <!-- Logo animé -->
+        <img src="logo.png" alt="The Fucken Logo" class="logo">
+    </header>
+
+    <div class="main-content">
+        <h2 id="why">Pourquoi "The Fucken" ?</h2>
+        <p id="why-text">Parce que dans un monde où tout est contrôlé, il est temps de briser les chaînes et de faire un doigt d'honneur aux systèmes centralisés. "The Fucken" est un token qui défend l'anarchie et la liberté des cryptos. Il n'y a aucune autre revendication, sauf celle de rendre les utilisateurs riches et libres.</p>
+
+        <h2 id="vision">Notre Vision</h2>
+        <p id="vision-text">Dans un futur néon et décentralisé, "The Fucken" n'est pas seulement un token, c'est un symbole. Il incarne l'esprit rebelle des crypto-monnaies. Sans frontières, sans règles imposées, uniquement la liberté d'agir, d'investir et de s'enrichir sans aucune restriction.</p>
+
+        <h2 id="join">Rejoignez le Mouvement</h2>
+        <p id="join-text">Avec "The Fucken", tu peux être acteur d'une révolution où chaque transaction est un pas de plus vers la liberté. Si tu crois que les cryptos doivent être libres, alors tu es prêt pour le chaos. Le moment est venu de participer à cette révolution anarchique.</p>
+
+        <a href="https://www.instagram.com/cryptodactracker/" class="cta-button" target="_blank">Suivez-nous sur Instagram</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 The Fucken. Tous droits réservés.</p>
+        <div class="social-links">
+            <a href="https://www.instagram.com/cryptodactracker/" target="_blank">Instagram</a>
+        </div>
+    </footer>
+
+    <script>
+        function changeLanguage(language) {
+            const translations = {
+                'fr': {
+                    'title': 'The Fucken',
+                    'slogan': 'Crypto are free',
+                    'why': 'Pourquoi "The Fucken" ?',
+                    'why-text': 'Parce que dans un monde où tout est contrôlé, il est temps de briser les chaînes et de faire un doigt d\'honneur aux systèmes centralisés. "The Fucken" est un token qui défend l\'anarchie et la liberté des cryptos. Il n\'y a aucune autre revendication, sauf celle de rendre les utilisateurs riches et libres.',
+                    'vision': 'Notre Vision',
+                    'vision-text': 'Dans un futur néon et décentralisé, "The Fucken" n\'est pas seulement un token, c\'est un symbole. Il incarne l\'esprit rebelle des crypto-monnaies. Sans frontières, sans règles imposées, uniquement la liberté d\'agir, d\'investir et de s\'enrichir sans aucune restriction.',
+                    'join': 'Rejoignez le Mouvement',
+                    'join-text': 'Avec "The Fucken", tu peux être acteur d\'une révolution où chaque transaction est un pas de plus vers la liberté. Si tu crois que les cryptos doivent être libres, alors tu es prêt pour le chaos. Le moment est venu de participer à cette révolution anarchique.'
+                },
+                'en': {
+                    'title': 'The Fucken',
+                    'slogan': 'Crypto are free',
+                    'why': 'Why "The Fucken"?',
+                    'why-text': 'Because in a world where everything is controlled, it\'s time to break the chains and give a middle finger to centralized systems. "The Fucken" is a token that defends anarchy and crypto freedom. There are no other claims, except for making users rich and free.',
+                    'vision': 'Our Vision',
+                    'vision-text': 'In a neon, decentralized future, "The Fucken" is not just a token, it\'s a symbol. It embodies the rebellious spirit of cryptocurrencies. No borders, no imposed rules, just the freedom to act, invest, and grow rich without restrictions.',
+                    'join': 'Join the Movement',
+                    'join-text': 'With "The Fucken", you can be part of a revolution where every transaction is another step towards freedom. If you believe that crypto should be free, then you\'re ready for chaos. The time has come to join this anarchic revolution.'
+                },
+                'zh': {
+                    'title': 'The Fucken',
+                    'slogan': '加密货币是免费的',
+                    'why': '为什么选择 "The Fucken"?',
+                    'why-text': '因为在一个一切都被控制的世界里，是时候打破枷锁，向集中的系统竖起中指了。"The Fucken"是一个捍卫无政府主义和加密货币自由的代币。没有其他诉求，只有让用户变得富有和自由。',
+                    'vision': '我们的愿景',
+                    'vision-text': '"The Fucken"不仅仅是一个代币，它是一个象征。它体现了加密货币的反叛精神。没有边界，没有强加的规则，只有自由地行动、投资和变得富有的权利。',
+                    'join': '加入运动',
+                    'join-text': '通过"The Fucken"，你可以成为革命的一部分，每一笔交易都是迈向自由的一步。如果你相信加密货币应该是自由的，那么你已经准备好迎接混乱了。是时候加入这个无政府主义的革命了。'
+                }
+            };
+
+            const languageData = translations[language];
+
+            document.getElementById('title').textContent = languageData.title;
+            document.getElementById('slogan').textContent = languageData.slogan;
+            document.getElementById('why').textContent = languageData.why;
+            document.getElementById('why-text').textContent = languageData['why-text'];
+            document.getElementById('vision').textContent = languageData.vision;
+            document.getElementById('vision-text').textContent = languageData['vision-text'];
+            document.getElementById('join').textContent = languageData.join;
+            document.getElementById('join-text').textContent = languageData['join-text'];
+        }
+    </script>
+</body>
+</html>
