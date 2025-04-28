@@ -8,32 +8,20 @@
     <meta name="author" content="Ton Nom ou Pseudonyme">
     <title>The Fucken - Crypto are Free</title>
     <style>
-        /* Fond dynamique et agressif */
+        /* Styles de base */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
-            background: linear-gradient(45deg, #e60000, #ff9900, #0066cc, #33cc33);
-            background-size: 400% 400%;
-            animation: gradientAnimation 5s ease infinite, flickerAnimation 1s infinite alternate;
+            background: #1b1b1b;
             color: white;
             overflow-x: hidden;
+            height: 100vh;
+            position: relative;
         }
 
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes flickerAnimation {
-            0% { opacity: 1; }
-            50% { opacity: 0.2; }
-            100% { opacity: 1; }
-        }
-
-        /* Overlay sombre pour créer un effet de tension */
+        /* Fond dynamique et animations */
         .background-overlay {
             position: absolute;
             top: 0;
@@ -42,45 +30,75 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.6);
             z-index: -1;
-            pointer-events: none;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         header {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 40px 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 80px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+            position: relative;
         }
 
         h1 {
             font-size: 4em;
             color: #FF5733;
             text-shadow: 0 0 10px #FF5733, 0 0 20px #FF5733, 0 0 30px #FF5733, 0 0 40px #FF5733;
+            margin: 0;
+            font-weight: bold;
+            letter-spacing: 2px;
             animation: flickerAnimation 0.3s infinite alternate;
         }
 
+        @keyframes flickerAnimation {
+            0% { opacity: 1; }
+            50% { opacity: 0.2; }
+            100% { opacity: 1; }
+        }
+
         p {
-            font-size: 1.5em;
-            color: #eee;
-            text-shadow: 0 0 10px #FF5733, 0 0 15px #FF5733;
+            font-size: 1.2em;
+            color: #ddd;
+            margin-top: 15px;
+            text-shadow: 0 0 5px #FF5733;
         }
 
         .logo {
-            width: 220px;
-            margin-top: 20px;
+            width: 200px;
+            margin-top: 30px;
             animation: pulse 2s infinite;
+        }
+
+        /* Animations du logo */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         .main-content {
             padding: 60px 20px;
-            background-color: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.9);
             border-radius: 10px;
+            margin-top: 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .main-content:hover {
+            transform: scale(1.05);
         }
 
         h2 {
             font-size: 2.5em;
-            margin-top: 40px;
             color: #FF5733;
+            margin-top: 40px;
+            text-shadow: 0 0 10px #FF5733;
         }
 
         .cta-button {
@@ -108,7 +126,7 @@
             width: 100%;
             bottom: 0;
             text-align: center;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.7);
         }
 
         .social-links a {
@@ -120,18 +138,6 @@
 
         .social-links a:hover {
             color: #C0392B;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
         }
 
         .lang-buttons {
@@ -156,26 +162,57 @@
         .lang-button:hover {
             background-color: #C0392B;
         }
+
+        /* Section Rareté */
+        .rarity-section {
+            margin-top: 50px;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .rarity-title {
+            font-size: 2.5em;
+            color: #FF5733;
+            text-shadow: 0 0 20px #FF5733;
+        }
+
+        .rarity-text {
+            font-size: 1.5em;
+            color: #eee;
+            text-shadow: 0 0 10px #FF5733, 0 0 15px #FF5733;
+            margin-top: 20px;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Overlay pour effet de brume et d'agression -->
+
+    <!-- Overlay sombre -->
     <div class="background-overlay"></div>
 
-    <!-- Boutons de traduction -->
+    <!-- Musique de fond métal -->
+    <audio autoplay loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Boutons de langue -->
     <div class="lang-buttons">
         <button class="lang-button" onclick="changeLanguage('fr')">FR</button>
         <button class="lang-button" onclick="changeLanguage('en')">EN</button>
         <button class="lang-button" onclick="changeLanguage('zh')">ZH</button>
     </div>
 
+    <!-- En-tête -->
     <header>
         <h1 id="title">The Fucken</h1>
         <p id="slogan">Crypto are free</p>
-        <!-- Logo animé -->
         <img src="logo.png" alt="The Fucken Logo" class="logo">
     </header>
 
+    <!-- Contenu principal -->
     <div class="main-content">
         <h2 id="why">Pourquoi "The Fucken" ?</h2>
         <p id="why-text">Parce que dans un monde où tout est contrôlé, il est temps de briser les chaînes et de faire un doigt d'honneur aux systèmes centralisés. "The Fucken" est un token qui défend l'anarchie et la liberté des cryptos. Il n'y a aucune autre revendication, sauf celle de rendre les utilisateurs riches et libres.</p>
@@ -186,9 +223,16 @@
         <h2 id="join">Rejoignez le Mouvement</h2>
         <p id="join-text">Avec "The Fucken", tu peux être acteur d'une révolution où chaque transaction est un pas de plus vers la liberté. Si tu crois que les cryptos doivent être libres, alors tu es prêt pour le chaos. Le moment est venu de participer à cette révolution anarchique.</p>
 
+        <!-- Section Rareté -->
+        <div class="rarity-section">
+            <h2 class="rarity-title">Rareté de "The Fucken"</h2>
+            <p class="rarity-text">Il y a un total de seulement 21 millions d'unités de "The Fucken" Token disponibles. Ce nombre limité en fait un actif rare et précieux, qui se distingue dans l'univers des cryptos. En possédant ce token, tu fais partie d'un cercle exclusif d'utilisateurs qui comprennent la véritable valeur de la liberté décentralisée.</p>
+        </div>
+
         <a href="https://www.instagram.com/cryptodactracker/" class="cta-button" target="_blank">Suivez-nous sur Instagram</a>
     </div>
 
+    <!-- Footer -->
     <footer>
         <p>&copy; 2025 The Fucken. Tous droits réservés.</p>
         <div class="social-links">
@@ -207,7 +251,9 @@
                     'vision': 'Notre Vision',
                     'vision-text': 'Dans un futur néon et décentralisé, "The Fucken" n\'est pas seulement un token, c\'est un symbole. Il incarne l\'esprit rebelle des crypto-monnaies. Sans frontières, sans règles imposées, uniquement la liberté d\'agir, d\'investir et de s\'enrichir sans aucune restriction.',
                     'join': 'Rejoignez le Mouvement',
-                    'join-text': 'Avec "The Fucken", tu peux être acteur d\'une révolution où chaque transaction est un pas de plus vers la liberté. Si tu crois que les cryptos doivent être libres, alors tu es prêt pour le chaos. Le moment est venu de participer à cette révolution anarchique.'
+                    'join-text': 'Avec "The Fucken", tu peux être acteur d\'une révolution où chaque transaction est un pas de plus vers la liberté. Si tu crois que les cryptos doivent être libres, alors tu es prêt pour le chaos. Le moment est venu de participer à cette révolution anarchique.',
+                    'rarity-title': 'Rareté de "The Fucken"',
+                    'rarity-text': 'Il y a un total de seulement 21 millions d\'unités de "The Fucken" Token disponibles. Ce nombre limité en fait un actif rare et précieux, qui se distingue dans l\'univers des cryptos. En possédant ce token, tu fais partie d\'un cercle exclusif d\'utilisateurs qui comprennent la véritable valeur de la liberté décentralisée.'
                 },
                 'en': {
                     'title': 'The Fucken',
@@ -217,7 +263,9 @@
                     'vision': 'Our Vision',
                     'vision-text': 'In a neon, decentralized future, "The Fucken" is not just a token, it\'s a symbol. It embodies the rebellious spirit of cryptocurrencies. No borders, no imposed rules, just the freedom to act, invest, and grow rich without restrictions.',
                     'join': 'Join the Movement',
-                    'join-text': 'With "The Fucken", you can be part of a revolution where every transaction is another step towards freedom. If you believe that crypto should be free, then you\'re ready for chaos. The time has come to join this anarchic revolution.'
+                    'join-text': 'With "The Fucken", you can be part of a revolution where every transaction is another step towards freedom. If you believe that crypto should be free, then you\'re ready for chaos. The time has come to join this anarchic revolution.',
+                    'rarity-title': 'Rarity of "The Fucken"',
+                    'rarity-text': 'There are only 21 million units of "The Fucken" Token available. This limited number makes it a rare and valuable asset, standing out in the crypto world. By owning this token, you become part of an exclusive circle of users who understand the true value of decentralized freedom.'
                 },
                 'zh': {
                     'title': 'The Fucken',
@@ -227,7 +275,9 @@
                     'vision': '我们的愿景',
                     'vision-text': '"The Fucken"不仅仅是一个代币，它是一个象征。它体现了加密货币的反叛精神。没有边界，没有强加的规则，只有自由地行动、投资和变得富有的权利。',
                     'join': '加入运动',
-                    'join-text': '通过"The Fucken"，你可以成为革命的一部分，每一笔交易都是迈向自由的一步。如果你相信加密货币应该是自由的，那么你已经准备好迎接混乱了。是时候加入这个无政府主义的革命了。'
+                    'join-text': '通过"The Fucken"，你可以成为革命的一部分，每一笔交易都是迈向自由的一步。如果你相信加密货币应该是自由的，那么你已经准备好迎接混乱了。是时候加入这个无政府主义的革命了。',
+                    'rarity-title': '"The Fucken"的稀有性',
+                    'rarity-text': '“The Fucken”代币的总数仅为2100万。这一有限的数量使其成为一个稀有且有价值的资产，在加密世界中脱颖而出。通过拥有此代币，你成为了一个理解去中心化自由真正价值的专属圈子的成员。'
                 }
             };
 
@@ -241,7 +291,10 @@
             document.getElementById('vision-text').textContent = languageData['vision-text'];
             document.getElementById('join').textContent = languageData.join;
             document.getElementById('join-text').textContent = languageData['join-text'];
+            document.getElementById('rarity-title').textContent = languageData['rarity-title'];
+            document.getElementById('rarity-text').textContent = languageData['rarity-text'];
         }
     </script>
+
 </body>
 </html>
